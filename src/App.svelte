@@ -3,7 +3,7 @@
   import Footer from './lib/Footer.svelte'
 </script>
 
-<div class="min-h-screen flex flex-col">
+<div class="min-h-screen flex flex-col dark:bg-gray-900">
   <main class="container mx-auto px-4 flex-grow">
     <Calculadora4x1000 />
   </main>

@@ -1,10 +1,13 @@
 <script>
+  import { onMount } from 'svelte'
+  
   let monto = $state(0)
   let resultado = $state(0)
   let historial = $state([])
   let inputValue = $state('')
   let error = $state('')
   let copiado = $state(false)
+  let darkMode = $state(false)
 
   function calcular4x1000() {
     if (!monto || monto <= 0) {
@@ -98,14 +101,52 @@
       console.error('Error al copiar:', err)
     }
   }
+
+  function toggleDarkMode() {
+    darkMode = !darkMode
+    document.documentElement.classList.toggle('dark')
+    // Opcional: guardar preferencia en localStorage
+    localStorage.setItem('darkMode', darkMode ? 'true' : 'false')
+  }
+
+  // Cargar preferencia al iniciar
+  onMount(() => {
+    if (localStorage.getItem('darkMode') === 'true') {
+      darkMode = true
+      document.documentElement.classList.add('dark')
+    } else {
+      // Asegurarnos que se quite la clase dark si existe
+      document.documentElement.classList.remove('dark')
+      localStorage.setItem('darkMode', 'false')
+    }
+  })
 </script>
 
-<div class="max-w-7xl mx-auto mt-10 p-4 md:p-8">
+<div class="max-w-7xl mx-auto mt-10 p-4 md:p-8 dark:bg-gray-900">
+  <div class="relative">
+    <button
+      onclick={toggleDarkMode}
+      class="absolute right-4 top-4 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+      title={darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+    >
+      {#if darkMode}
+        <!-- Sol -->
+        <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
+        </svg>
+      {:else}
+        <!-- Luna -->
+        <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+        </svg>
+      {/if}
+    </button>
+  </div>
   <div class="flex flex-col lg:flex-row gap-8">
     <div class="lg:w-1/3 order-2 lg:order-none">
-      <div class="bg-white rounded-xl shadow-lg p-6 mb-8 lg:mb-0">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">¿Cómo calcular el impuesto 4×1000?</h2>
-        <p class="text-gray-600 mb-8">Sigue estos tres pasos fácil y rápido</p>
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 lg:mb-0">
+        <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">¿Cómo calcular el impuesto 4×1000?</h2>
+        <p class="text-gray-600 dark:text-gray-300 mb-8">Sigue estos tres pasos fácil y rápido</p>
         
         <div class="space-y-8">
           <div class="flex gap-4">
@@ -115,8 +156,8 @@
               </span>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-800 mb-1">Ingresa el valor de la transacción</h3>
-              <p class="text-gray-600 text-sm">
+              <h3 class="font-semibold text-gray-800 dark:text-white mb-1">Ingresa el valor de la transacción</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
                 Asegúrate de poner el valor correcto, para que puedas obtener resultados precisos.
               </p>
             </div>
@@ -129,8 +170,8 @@
               </span>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-800 mb-1">Haz clic en "Calcular"</h3>
-              <p class="text-gray-600 text-sm">
+              <h3 class="font-semibold text-gray-800 dark:text-white mb-1">Haz clic en "Calcular"</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
                 La calculadora realiza la operación del impuesto 4×1000 automáticamente.
               </p>
             </div>
@@ -143,8 +184,8 @@
               </span>
             </div>
             <div>
-              <h3 class="font-semibold text-gray-800 mb-1">Revisa los resultados</h3>
-              <p class="text-gray-600 text-sm">
+              <h3 class="font-semibold text-gray-800 dark:text-white mb-1">Revisa los resultados</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm">
                 La calculadora te mostrará el monto del impuesto 4×1000 correspondiente a la transacción ingresada.
               </p>
             </div>
@@ -154,20 +195,20 @@
     </div>
 
     <div class="lg:w-2/3 order-1 lg:order-none">
-      <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 md:p-8">
         <div class="mb-8 text-center">
-          <h2 class="text-3xl font-bold text-gray-800 mb-2">Calculadora 4x1000</h2>
-          <p class="text-gray-600">Calcula el Gravamen a los Movimientos Financieros (GMF)</p>
+          <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Calculadora 4x1000</h2>
+          <p class="text-gray-600 dark:text-gray-400">Calcula el Gravamen a los Movimientos Financieros (GMF)</p>
         </div>
 
         <!-- Formulario principal -->
-        <div class="bg-gray-50 p-6 rounded-lg mb-6">
+        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
           <div class="mb-6">
-            <label class="block text-gray-700 text-sm font-semibold mb-2" for="monto">
+            <label class="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2" for="monto">
               Monto a calcular
             </label>
             <div class="relative">
-              <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+              <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
               <input
                 type="tel"
                 inputmode="numeric"
@@ -176,7 +217,7 @@
                 value={inputValue}
                 oninput={handleInput}
                 onkeypress={handleKeyPress}
-                class="pl-8 w-full py-3 px-4 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white"
                 placeholder="Ingrese el valor"
                 autocomplete="off"
               />
@@ -213,16 +254,16 @@
 
         <!-- Resultado -->
         {#if resultado > 0}
-          <div class="bg-blue-50 border border-blue-100 rounded-lg p-6 mb-6">
-            <h3 class="text-lg font-semibold text-blue-900 mb-4">Resultado del cálculo</h3>
+          <div class="bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800 rounded-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold text-blue-900 dark:text-white mb-4">Resultado del cálculo</h3>
             <div class="grid grid-cols-2 gap-4">
-              <div class="bg-white p-4 rounded-lg">
-                <p class="text-sm text-gray-600 mb-1">Monto ingresado:</p>
-                <p class="text-xl font-bold text-gray-800">{formatearNumero(monto)}</p>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Monto ingresado:</p>
+                <p class="text-xl font-bold text-gray-800 dark:text-white">{formatearNumero(monto)}</p>
               </div>
-              <div class="bg-white p-4 rounded-lg">
-                <p class="text-sm text-gray-600 mb-1">Valor del 4x1000:</p>
-                <p class="text-xl font-bold text-green-600">{formatearNumero(resultado)}</p>
+              <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Valor del 4x1000:</p>
+                <p class="text-xl font-bold text-green-600 dark:text-white">{formatearNumero(resultado)}</p>
               </div>
             </div>
             <div class="mt-6 flex flex-col gap-3">
@@ -259,20 +300,20 @@
 
         <!-- Historial -->
         {#if historial.length > 0}
-          <div class="border-t pt-6">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Últimos cálculos</h3>
+          <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Últimos cálculos</h3>
             <div class="space-y-3">
               {#each historial as {monto, resultado, fecha}}
-                <div class="bg-gray-50 p-3 rounded-lg flex justify-between items-center text-sm hover:bg-gray-100 transition-colors duration-200">
+                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg flex justify-between items-center text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
                   <div>
-                    <span class="text-gray-600">Monto: </span>
-                    <span class="font-medium">{formatearNumero(monto)}</span>
+                    <span class="text-gray-600 dark:text-gray-400">Monto: </span>
+                    <span class="font-medium text-gray-800 dark:text-white">{formatearNumero(monto)}</span>
                   </div>
                   <div>
-                    <span class="text-gray-600">4x1000: </span>
-                    <span class="font-medium text-green-600">{formatearNumero(resultado)}</span>
+                    <span class="text-gray-600 dark:text-gray-400">4x1000: </span>
+                    <span class="font-medium text-green-600 dark:text-green-400">{formatearNumero(resultado)}</span>
                   </div>
-                  <div class="text-gray-500 text-xs">{fecha}</div>
+                  <div class="text-gray-500 dark:text-gray-400 text-xs">{fecha}</div>
                 </div>
               {/each}
             </div>
