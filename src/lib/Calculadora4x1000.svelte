@@ -3,24 +3,30 @@
   let resultado = $state(0)
   let historial = $state([])
   let inputValue = $state('')
+  let error = $state('')
 
   function calcular4x1000() {
-    if (monto > 0) {
-      resultado = (monto * 4) / 1000
-      try {
-        window.gtag('event', 'calculo_realizado', {
-          'monto': monto,
-          'resultado': resultado
-        });
-      } catch (e) {
-        console.log('Analytics no disponible');
-      }
-      historial = [{
-        monto,
-        resultado,
-        fecha: new Date().toLocaleString('es-CO')
-      }, ...historial].slice(0, 5) 
+    if (!monto || monto <= 0) {
+      error = 'Ingresa el valor para calcular tu 4x1000'
+      document.getElementById('monto').focus()
+      return
     }
+    
+    error = ''
+    resultado = (monto * 4) / 1000
+    try {
+      window.gtag('event', 'calculo_realizado', {
+        'monto': monto,
+        'resultado': resultado
+      });
+    } catch (e) {
+      console.log('Analytics no disponible');
+    }
+    historial = [{
+      monto,
+      resultado,
+      fecha: new Date().toLocaleString('es-CO')
+    }, ...historial].slice(0, 5) 
   }
 
   function handleKeyPress(event) {
@@ -30,6 +36,7 @@
   }
 
   function handleInput(event) {
+    error = ''
     // Eliminar todo excepto números
     const numericValue = event.target.value.replace(/\D/g, '')
     monto = numericValue ? parseInt(numericValue) : 0
@@ -76,7 +83,7 @@
 
 <div class="max-w-7xl mx-auto mt-10 p-4 md:p-8">
   <div class="flex flex-col lg:flex-row gap-8">
-    <div class="lg:w-1/3">
+    <div class="lg:w-1/3 order-2 lg:order-none">
       <div class="bg-white rounded-xl shadow-lg p-6 mb-8 lg:mb-0">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">¿Cómo calcular el impuesto 4×1000?</h2>
         <p class="text-gray-600 mb-8">Sigue estos tres pasos fácil y rápido</p>
@@ -127,7 +134,7 @@
       </div>
     </div>
 
-    <div class="lg:w-2/3">
+    <div class="lg:w-2/3 order-1 lg:order-none">
       <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8">
         <div class="mb-8 text-center">
           <h2 class="text-3xl font-bold text-gray-800 mb-2">Calculadora 4x1000</h2>
@@ -155,6 +162,18 @@
                 autocomplete="off"
               />
             </div>
+            {#if error}
+              <div class="mt-3 flex items-center gap-3 bg-blue-50/50 border border-blue-100 p-3 rounded-xl animate-fade-in">
+                <div class="flex-shrink-0">
+                  <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <p class="text-sm text-blue-700 font-medium">
+                  {error}
+                </p>
+              </div>
+            {/if}
           </div>
 
           <div class="flex gap-4">
