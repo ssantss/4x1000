@@ -292,11 +292,11 @@
             <div class="grid grid-cols-2 gap-4">
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Monto ingresado:</p>
-                <p class="text-lg md:text-xl font-bold text-gray-800 dark:text-white text-balance whitespace-nowrap text-[clamp(14px,2vw,24px)]">{formatearNumero(monto)}</p>
+                <p class="text-[clamp(14px,2vw,24px)] font-bold text-gray-800 dark:text-white whitespace-nowrap">{formatearNumero(monto)}</p>
               </div>
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Valor del 4x1000:</p>
-                <p class="text-lg md:text-xl font-bold text-green-600 dark:text-white text-balance whitespace-nowrap text-[clamp(14px,2vw,24px)]">{formatearNumero(resultado)}</p>
+                <p class="text-[clamp(14px,2vw,24px)] font-bold text-green-600 dark:text-white whitespace-nowrap">{formatearNumero(resultado)}</p>
               </div>
             </div>
             <div class="mt-6 flex flex-col gap-3">
