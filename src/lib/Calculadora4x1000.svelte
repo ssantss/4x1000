@@ -9,6 +9,10 @@
   let copiado = $state(false)
   let copiadoIndex = $state(null)
   let darkMode = $state(false)
+  let copiadoMonto = $state(false)
+  let copiadoImpuesto = $state(false)
+  let copiadoDescuento = $state(false)
+  let copiadoTotal = $state(false)
 
   function calcular4x1000() {
     if (!monto || monto <= 0) {
@@ -69,8 +73,10 @@
   function formatearMensajeWhatsApp(monto, resultado) {
     return `📊 *CALCULADORA 4x1000*
 
-💵 *Monto:* ${formatearNumero(monto)}
-💰 *Valor 4x1000:* ${formatearNumero(resultado)}
+💵 *Valor de la transacción:* ${formatearNumero(monto)}
+💰 *Impuesto 4x1000:* ${formatearNumero(resultado)}
+➖ *Valor descontando 4x1000:* ${formatearNumero(monto - resultado)}
+➕ *Valor incluyendo 4x1000:* ${formatearNumero(monto + resultado)}
 
 🌐 Calcula en: https://4x1000.co`
   }
@@ -84,13 +90,8 @@
 
   async function copiarResultado() {
     try {
-      // Usar el formateador pero solo para el número, sin el símbolo de moneda
-      const valorFormateado = new Intl.NumberFormat('es-CO', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }).format(resultado)
-      
-      await navigator.clipboard.writeText(valorFormateado)
+      // Copiar el valor numérico directamente, sin formato
+      await navigator.clipboard.writeText(resultado.toString())
       copiado = true
       setTimeout(() => {
         copiado = false
@@ -102,12 +103,8 @@
 
   function copiarResultadoHistorial(valor, index) {
     try {
-      const valorFormateado = new Intl.NumberFormat('es-CO', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }).format(valor)
-      
-      navigator.clipboard.writeText(valorFormateado)
+      // Copiar el valor numérico directamente, sin formato
+      navigator.clipboard.writeText(valor.toString())
       copiadoIndex = index
       setTimeout(() => {
         copiadoIndex = null
@@ -135,6 +132,20 @@
       localStorage.setItem('darkMode', 'false')
     }
   })
+
+  // Modificar la función copiarValor
+  async function copiarValor(valor, setCopiadoState) {
+    try {
+      // Copiar el valor numérico directamente, sin formato
+      await navigator.clipboard.writeText(valor.toString())
+      setCopiadoState(true)
+      setTimeout(() => {
+        setCopiadoState(false)
+      }, 2000)
+    } catch (err) {
+      console.error('Error al copiar:', err)
+    }
+  }
 </script>
 
 <div class="max-w-7xl mx-auto mt-10 p-4 md:p-8 dark:bg-gray-900">
@@ -209,7 +220,7 @@
 
     <div class="lg:w-2/3 order-1 lg:order-none">
       <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 md:p-8">
-        <div class="mb-8 text-center">
+        <div class="mb-2 text-center">
           <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Calculadora 4x1000</h2>
           <p class="text-gray-600 dark:text-gray-400">Calcula el Gravamen a los Movimientos Financieros (GMF)</p>
         </div>
@@ -279,18 +290,66 @@
 
         <!-- Resultado -->
         {#if resultado > 0}
-          <div class="bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800 rounded-lg p-6 mb-6">
+          <div class="bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800 rounded-lg p-4 sm:p-6 mb-6">
             <h3 class="text-lg font-semibold text-blue-900 dark:text-white mb-4">Resultado del cálculo</h3>
-            <div class="grid grid-cols-2 gap-2 sm:gap-4">
-              <div class="bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg">
-                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Monto ingresado:</p>
-                <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold text-gray-800 dark:text-white whitespace-nowrap">{formatearNumero(monto)}</p>
-              </div>
-              <div class="bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg">
-                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor del 4x1000:</p>
-                <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold text-green-600 dark:text-white whitespace-nowrap">{formatearNumero(resultado)}</p>
-              </div>
+            <div class="space-y-3">
+              <button
+                type="button"
+                onclick={() => copiarValor(monto, (v) => copiadoMonto = v)}
+                class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
+              >
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor de la transacción:</p>
+                <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold text-gray-800 dark:text-white">{formatearNumero(monto)}</p>
+                {#if copiadoMonto}
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                    ¡Copiado!
+                  </span>
+                {/if}
+              </button>
+
+              <button
+                type="button"
+                onclick={() => copiarValor(resultado, (v) => copiadoImpuesto = v)}
+                class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
+              >
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Impuesto 4x1000:</p>
+                <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold text-green-600 dark:text-green-400">{formatearNumero(resultado)}</p>
+                {#if copiadoImpuesto}
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                    ¡Copiado!
+                  </span>
+                {/if}
+              </button>
+
+              <button
+                type="button"
+                onclick={() => copiarValor(monto - resultado, (v) => copiadoDescuento = v)}
+                class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
+              >
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor descontando 4x1000:</p>
+                <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold text-orange-600 dark:text-orange-400">{formatearNumero(monto - resultado)}</p>
+                {#if copiadoDescuento}
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                    ¡Copiado!
+                  </span>
+                {/if}
+              </button>
+
+              <button
+                type="button"
+                onclick={() => copiarValor(monto + resultado, (v) => copiadoTotal = v)}
+                class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
+              >
+                <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor incluyendo 4x1000:</p>
+                <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold text-blue-600 dark:text-blue-400">{formatearNumero(monto + resultado)}</p>
+                {#if copiadoTotal}
+                  <span class="absolute right-2 top-1/2 -translate-y-1/2 bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                    ¡Copiado!
+                  </span>
+                {/if}
+              </button>
             </div>
+
             <div class="mt-4 sm:mt-6 flex gap-2 sm:gap-3">
               <button
                 onclick={copiarResultado}
