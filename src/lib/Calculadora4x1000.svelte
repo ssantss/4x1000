@@ -102,6 +102,23 @@
     }
   }
 
+  function copiarResultadoHistorial(valor) {
+    try {
+      const valorFormateado = new Intl.NumberFormat('es-CO', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      }).format(valor)
+      
+      navigator.clipboard.writeText(valorFormateado)
+      copiado = true
+      setTimeout(() => {
+        copiado = false
+      }, 2000)
+    } catch (err) {
+      console.error('Error al copiar:', err)
+    }
+  }
+
   function toggleDarkMode() {
     darkMode = !darkMode
     document.documentElement.classList.toggle('dark')
@@ -304,7 +321,11 @@
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Últimos cálculos</h3>
             <div class="space-y-3">
               {#each historial as {monto, resultado, fecha}}
-                <div class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg flex justify-between items-center text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                <button
+                  type="button"
+                  class="w-full text-left bg-gray-50 dark:bg-gray-800 p-3 rounded-lg flex justify-between items-center text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+                  onclick={() => copiarResultadoHistorial(resultado)}
+                >
                   <div>
                     <span class="text-gray-600 dark:text-gray-400">Monto: </span>
                     <span class="font-medium text-gray-800 dark:text-white">{formatearNumero(monto)}</span>
@@ -314,7 +335,7 @@
                     <span class="font-medium text-green-600 dark:text-green-400">{formatearNumero(resultado)}</span>
                   </div>
                   <div class="text-gray-500 dark:text-gray-400 text-xs">{fecha}</div>
-                </div>
+                </button>
               {/each}
             </div>
           </div>
