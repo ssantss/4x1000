@@ -18,6 +18,14 @@
   let copiadoDescuento = $state(false)
   let copiadoTotal = $state(false)
 
+  function guardarHistorial(nuevoHistorial) {
+    try {
+      localStorage.setItem('calculadora4x1000_historial', JSON.stringify(nuevoHistorial))
+    } catch (error) {
+      console.error('Error al guardar el historial:', error)
+    }
+  }
+
   function calcular4x1000() {
     if (!monto || monto <= 0) {
       error = 'Ingresa el valor para calcular tu 4x1000'
@@ -27,11 +35,14 @@
     
     error = ''
     resultado = (monto * 4) / 1000
-    historial = [{
+    const nuevoHistorial = [{
       monto,
       resultado,
       fecha: new Date().toLocaleString('es-CO')
-    }, ...historial].slice(0, 5) 
+    }, ...historial].slice(0, 10)
+    
+    historial = nuevoHistorial
+    guardarHistorial(nuevoHistorial)
   }
 
   function handleKeyPress(event) {
@@ -133,6 +144,11 @@
     localStorage.setItem('darkMode', darkMode ? 'true' : 'false')
   }
 
+  function limpiarHistorial() {
+    historial = []
+    guardarHistorial([])
+  }
+
   // Cargar preferencia al iniciar
   onMount(() => {
     if (localStorage.getItem('darkMode') === 'true') {
@@ -141,6 +157,15 @@
     } else {
       document.documentElement.classList.remove('dark')
       localStorage.setItem('darkMode', 'false')
+    }
+
+    try {
+      const historialGuardado = localStorage.getItem('calculadora4x1000_historial')
+      if (historialGuardado) {
+        historial = JSON.parse(historialGuardado)
+      }
+    } catch (error) {
+      console.error('Error al cargar el historial:', error)
     }
   })
 </script>
@@ -295,7 +320,17 @@
 
         {#if historial.length > 0}
           <div class="border-t border-gray-200 dark:border-gray-700 pt-4 sm:pt-6">
-            <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-white mb-3 sm:mb-4">Últimos cálculos</h3>
+            <div class="flex justify-between items-center mb-3 sm:mb-4">
+              <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
+                Últimos cálculos
+              </h3>
+              <button
+                onclick={limpiarHistorial}
+                class="text-xs text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors"
+              >
+                Limpiar historial
+              </button>
+            </div>
             <div class="space-y-2 sm:space-y-3">
               {#each historial as {monto, resultado, fecha}, index}
                 <HistorialItem
