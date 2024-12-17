@@ -129,9 +129,11 @@
   function toggleDarkMode() {
     darkMode = !darkMode
     document.documentElement.classList.toggle('dark')
+    // Opcional: guardar preferencia en localStorage
     localStorage.setItem('darkMode', darkMode ? 'true' : 'false')
   }
 
+  // Cargar preferencia al iniciar
   onMount(() => {
     if (localStorage.getItem('darkMode') === 'true') {
       darkMode = true
