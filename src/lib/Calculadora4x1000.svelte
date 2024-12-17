@@ -19,14 +19,6 @@
     
     error = ''
     resultado = (monto * 4) / 1000
-    try {
-      window.gtag('event', 'calculo_realizado', {
-        'monto': monto,
-        'resultado': resultado
-      });
-    } catch (e) {
-      console.log('Analytics no disponible');
-    }
     historial = [{
       monto,
       resultado,
