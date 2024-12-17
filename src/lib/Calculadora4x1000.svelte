@@ -146,10 +146,10 @@
 </script>
 
 <div class="max-w-7xl mx-auto mt-10 p-4 md:p-8 dark:bg-gray-900">
-  <div class="relative">
+  <div class="flex justify-end mb-4 md:absolute md:right-4 md:top-4">
     <button
       onclick={toggleDarkMode}
-      class="absolute right-4 top-4 p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+      class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
       title={darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
     >
       {#if darkMode}
@@ -240,7 +240,7 @@
                 value={inputValue}
                 oninput={handleInput}
                 onkeypress={handleKeyPress}
-                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white"
+                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white truncate"
                 placeholder="Ingrese el valor"
                 autocomplete="off"
               />
