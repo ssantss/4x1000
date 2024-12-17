@@ -45,6 +45,11 @@
     const numericValue = event.target.value.replace(/\D/g, '')
     monto = numericValue ? parseInt(numericValue) : 0
     
+    // Si el valor es 0 o está vacío, limpiar el resultado
+    if (!numericValue || monto === 0) {
+      resultado = 0
+    }
+    
     // Formatear para mostrar en el input
     if (numericValue) {
       const formateado = new Intl.NumberFormat('es-CO', {
