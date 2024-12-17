@@ -43,6 +43,19 @@
     
     historial = nuevoHistorial
     guardarHistorial(nuevoHistorial)
+
+    // Trackear el evento de cálculo
+    try {
+      if (window.umami) {
+        umami.track('calculo_4x1000', { 
+          monto: monto,
+          resultado: resultado 
+        })
+        console.log('Evento trackeado:', { monto, resultado })
+      }
+    } catch (error) {
+      console.error('Error al trackear:', error)
+    }
   }
 
   function handleKeyPress(event) {
