@@ -88,27 +88,38 @@
     document.getElementById('monto').focus()
   }
 
-  async function copiarResultado() {
+  async function copiar(valor, tipo, index = null) {
     try {
-      // Copiar el valor numérico directamente, sin formato
-      await navigator.clipboard.writeText(resultado.toString())
-      copiado = true
-      setTimeout(() => {
-        copiado = false
-      }, 2000)
-    } catch (err) {
-      console.error('Error al copiar:', err)
-    }
-  }
 
-  function copiarResultadoHistorial(valor, index) {
-    try {
-      // Copiar el valor numérico directamente, sin formato
-      navigator.clipboard.writeText(valor.toString())
-      copiadoIndex = index
-      setTimeout(() => {
-        copiadoIndex = null
-      }, 2000)
+      
+      await navigator.clipboard.writeText(valor)
+      
+      switch (tipo) {
+        case 'monto':
+          copiadoMonto = true
+          setTimeout(() => copiadoMonto = false, 2000)
+          break
+        case 'impuesto':
+          copiadoImpuesto = true
+          setTimeout(() => copiadoImpuesto = false, 2000)
+          break
+        case 'descuento':
+          copiadoDescuento = true
+          setTimeout(() => copiadoDescuento = false, 2000)
+          break
+        case 'total':
+          copiadoTotal = true
+          setTimeout(() => copiadoTotal = false, 2000)
+          break
+        case 'resultado':
+          copiado = true
+          setTimeout(() => copiado = false, 2000)
+          break
+        case 'historial':
+          copiadoIndex = index
+          setTimeout(() => copiadoIndex = null, 2000)
+          break
+      }
     } catch (err) {
       console.error('Error al copiar:', err)
     }
@@ -132,20 +143,6 @@
       localStorage.setItem('darkMode', 'false')
     }
   })
-
-  // Modificar la función copiarValor
-  async function copiarValor(valor, setCopiadoState) {
-    try {
-      // Copiar el valor numérico directamente, sin formato
-      await navigator.clipboard.writeText(valor.toString())
-      setCopiadoState(true)
-      setTimeout(() => {
-        setCopiadoState(false)
-      }, 2000)
-    } catch (err) {
-      console.error('Error al copiar:', err)
-    }
-  }
 </script>
 
 <div class="max-w-7xl mx-auto mt-10 p-4 md:p-8 dark:bg-gray-900">
@@ -295,7 +292,7 @@
             <div class="space-y-3">
               <button
                 type="button"
-                onclick={() => copiarValor(monto, (v) => copiadoMonto = v)}
+                onclick={() => copiar(monto, 'monto')}
                 class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
               >
                 <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor de la transacción:</p>
@@ -309,7 +306,7 @@
 
               <button
                 type="button"
-                onclick={() => copiarValor(resultado, (v) => copiadoImpuesto = v)}
+                onclick={() => copiar(resultado, 'impuesto')}
                 class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
               >
                 <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Impuesto 4x1000:</p>
@@ -323,7 +320,7 @@
 
               <button
                 type="button"
-                onclick={() => copiarValor(monto - resultado, (v) => copiadoDescuento = v)}
+                onclick={() => copiar(monto - resultado, 'descuento')}
                 class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
               >
                 <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor descontando 4x1000:</p>
@@ -337,7 +334,7 @@
 
               <button
                 type="button"
-                onclick={() => copiarValor(monto + resultado, (v) => copiadoTotal = v)}
+                onclick={() => copiar(monto + resultado, 'total')}
                 class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group"
               >
                 <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">Valor incluyendo 4x1000:</p>
@@ -352,7 +349,7 @@
 
             <div class="mt-4 sm:mt-6 flex gap-2 sm:gap-3">
               <button
-                onclick={copiarResultado}
+                onclick={() => copiar(resultado, 'resultado')}
                 class="flex-1 inline-flex items-center justify-center gap-1 sm:gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
                 <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -391,7 +388,7 @@
                 <button
                   type="button"
                   class="relative w-full text-left bg-gray-50 dark:bg-gray-800 p-2 sm:p-3 rounded-lg flex justify-between items-center text-xs sm:text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
-                  onclick={() => copiarResultadoHistorial(resultado, index)}
+                  onclick={() => copiar(resultado, 'historial', index)}
                 >
                   {#if copiadoIndex === index}
                     <div class="absolute inset-0 flex items-center justify-center">
