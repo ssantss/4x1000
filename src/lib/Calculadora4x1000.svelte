@@ -7,6 +7,7 @@
   let inputValue = $state('')
   let error = $state('')
   let copiado = $state(false)
+  let copiadoIndex = $state(null)
   let darkMode = $state(false)
 
   function calcular4x1000() {
@@ -107,7 +108,7 @@
     }
   }
 
-  function copiarResultadoHistorial(valor) {
+  function copiarResultadoHistorial(valor, index) {
     try {
       const valorFormateado = new Intl.NumberFormat('es-CO', {
         minimumFractionDigits: 0,
@@ -115,9 +116,9 @@
       }).format(valor)
       
       navigator.clipboard.writeText(valorFormateado)
-      copiado = true
+      copiadoIndex = index
       setTimeout(() => {
-        copiado = false
+        copiadoIndex = null
       }, 2000)
     } catch (err) {
       console.error('Error al copiar:', err)
@@ -243,6 +244,18 @@
                 placeholder="Ingrese el valor"
                 autocomplete="off"
               />
+              {#if inputValue}
+                <button
+                  type="button"
+                  aria-label="Limpiar valor"
+                  onclick={limpiar}
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              {/if}
             </div>
             {#if error}
               <div class="mt-3 flex items-center gap-3 bg-blue-50/50 border border-blue-100 p-3 rounded-xl animate-fade-in">
@@ -325,12 +338,23 @@
           <div class="border-t border-gray-200 dark:border-gray-700 pt-6">
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Últimos cálculos</h3>
             <div class="space-y-3">
-              {#each historial as {monto, resultado, fecha}}
+              {#each historial as {monto, resultado, fecha}, index}
                 <button
                   type="button"
-                  class="w-full text-left bg-gray-50 dark:bg-gray-800 p-3 rounded-lg flex justify-between items-center text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
-                  onclick={() => copiarResultadoHistorial(resultado)}
+                  class="relative w-full text-left bg-gray-50 dark:bg-gray-800 p-3 rounded-lg flex justify-between items-center text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+                  onclick={() => copiarResultadoHistorial(resultado, index)}
                 >
+                  {#if copiadoIndex === index}
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <span class="bg-green-500 text-white px-3 py-1 rounded-md text-xs font-medium shadow-sm flex items-center gap-1 animate-fade-in-right">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                        Copiado
+                      </span>
+                      <div class="absolute inset-0 bg-white/30 dark:bg-gray-900/30 rounded-lg"></div>
+                    </div>
+                  {/if}
                   <div>
                     <span class="text-gray-600 dark:text-gray-400">Monto: </span>
                     <span class="font-medium text-gray-800 dark:text-white">{formatearNumero(monto)}</span>
