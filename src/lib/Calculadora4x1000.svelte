@@ -146,25 +146,23 @@
 </script>
 
 <div class="max-w-7xl mx-auto mt-10 p-4 md:p-8 dark:bg-gray-900">
-  <div class="flex justify-end mb-4 md:absolute md:right-4 md:top-4">
-    <button
-      onclick={toggleDarkMode}
-      class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-      title={darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-    >
-      {#if darkMode}
-        <!-- Sol -->
-        <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
-        </svg>
-      {:else}
-        <!-- Luna -->
-        <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-        </svg>
-      {/if}
-    </button>
-  </div>
+  <button
+    onclick={toggleDarkMode}
+    class="fixed right-0 top-0 p-2 rounded-bl-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors z-50"
+    title={darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+  >
+    {#if darkMode}
+      <!-- Sol -->
+      <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" />
+      </svg>
+    {:else}
+      <!-- Luna -->
+      <svg class="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+      </svg>
+    {/if}
+  </button>
   <div class="flex flex-col lg:flex-row gap-8">
     <div class="lg:w-1/3 order-2 lg:order-none">
       <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 lg:mb-0">
@@ -240,7 +238,7 @@
                 value={inputValue}
                 oninput={handleInput}
                 onkeypress={handleKeyPress}
-                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white truncate"
+                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white text-lg font-medium overflow-x-auto"
                 placeholder="Ingrese el valor"
                 autocomplete="off"
               />
@@ -294,11 +292,11 @@
             <div class="grid grid-cols-2 gap-4">
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Monto ingresado:</p>
-                <p class="text-xl font-bold text-gray-800 dark:text-white">{formatearNumero(monto)}</p>
+                <p class="text-lg md:text-xl font-bold text-gray-800 dark:text-white text-balance whitespace-nowrap text-[clamp(14px,2vw,24px)]">{formatearNumero(monto)}</p>
               </div>
               <div class="bg-white dark:bg-gray-800 p-4 rounded-lg">
                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Valor del 4x1000:</p>
-                <p class="text-xl font-bold text-green-600 dark:text-white">{formatearNumero(resultado)}</p>
+                <p class="text-lg md:text-xl font-bold text-green-600 dark:text-white text-balance whitespace-nowrap text-[clamp(14px,2vw,24px)]">{formatearNumero(resultado)}</p>
               </div>
             </div>
             <div class="mt-6 flex flex-col gap-3">
