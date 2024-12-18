@@ -58,15 +58,51 @@
   }
 
   function handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      calcular4x1000()
+    const inputElement = document.getElementById('monto');
+    const currentValue = inputElement.value;
+
+    // Reemplazar punto por coma si se presiona
+    if (event.key === '.') {
+        event.preventDefault(); // Prevenir la entrada del punto
+        // Verificar si ya existe una coma
+        if (!currentValue.includes(',')) {
+            inputElement.value = currentValue + ','; // Agregar una coma al valor actual
+            inputValue = inputElement.value; // Actualizar inputValue
+            monto = parseFloat(inputValue.replace(',', '.')) || 0; // Actualizar monto
+        }
+        return; // Salir de la función
     }
-  }
+
+    // Prevenir la entrada de letras
+    if (!/[0-9,]/.test(event.key)) {
+        event.preventDefault();
+    }
+
+    // Prevenir la entrada de otra coma si ya existe
+    if (event.key === ',') {
+        if (currentValue.includes(',')) {
+            event.preventDefault(); // Prevenir la entrada de otra coma
+        }
+        return; // Salir de la función
+    }
+
+    // Verificar si hay más de 3 dígitos después de la coma
+    const decimalIndex = currentValue.indexOf(',');
+    if (decimalIndex !== -1 && currentValue.length - decimalIndex > 2) {
+        event.preventDefault(); // Prevenir la entrada si ya hay 2 dígitos después de la coma
+    }
+
+    // Calcular si se presiona Enter
+    if (event.key === 'Enter') {
+        calcular4x1000();
+    }
+}
 
   function handleInput(event) {
     error = ''
-    const numericValue = event.target.value.replace(/\D/g, '')
-    monto = numericValue ? parseInt(numericValue) : 0
+    
+    const numericValue = event.target.value.replace(/[^0-9,]/g, '')
+    monto = numericValue ? parseFloat(numericValue.replace(',', '.')) : 0
     
     if (!numericValue || monto === 0) {
       resultado = 0
@@ -75,7 +111,8 @@
     if (numericValue) {
       const formateado = new Intl.NumberFormat('es-CO', {
         style: 'decimal',
-        maximumFractionDigits: 0
+        maximumFractionDigits: 2,
+        minimumFractionDigits: 0
       }).format(monto)
       inputValue = `$ ${formateado}`
     } else {
