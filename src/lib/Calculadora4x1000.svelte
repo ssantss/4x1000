@@ -320,22 +320,23 @@
               />
 
               <ResultadoCard
-                titulo="Valor a transferir descontando 4x1000:"
-                valor={formatearNumero(monto / (1 + 0.004))}
-                copiado={copiadoDescuento}
-                colorTexto="text-orange-600"
-                darkColorTexto="dark:text-orange-400"
-                on:click={() => copiar(monto / (1 + 0.004), 'descuento')}
-              />
-
-              <ResultadoCard
-                titulo="Valor incluyendo 4x1000:"
+                titulo="Valor a transferir incluyendo 4x1000:"
+                subtitulo="Valor que debes enviar para que lleguen {formatearNumero(monto)}."
                 valor={formatearNumero(monto + resultado)}
                 copiado={copiadoTotal}
                 colorTexto="text-blue-600"
                 darkColorTexto="dark:text-blue-400"
                 on:click={() => copiar(monto + resultado, 'total')}
               />
+              <ResultadoCard
+              titulo="Valor disponible para transferir:"
+              subtitulo="Si tu cuenta tiene un saldo de {formatearNumero(monto)} , este es el máximo valor que puedes transferir incluyendo el 4x1000."
+              valor={formatearNumero(monto / (1 + 0.004))}
+              copiado={copiadoDescuento}
+              colorTexto="text-orange-600"
+              darkColorTexto="dark:text-orange-400"
+              on:click={() => copiar(monto / (1 + 0.004), 'descuento')}
+            />
             </div>
 
             <div class="mt-4 sm:mt-6 flex gap-2 sm:gap-3">
