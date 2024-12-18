@@ -3,10 +3,9 @@
   
   let deferredPrompt;
   let showInstallButton = $state(false);
-  let dismissCount = $state(0); // Contador de veces que se ha descartado
+  let dismissCount = $state(0);
 
   onMount(() => {
-    // Verificar si está oculto y por cuánto tiempo
     const hideUntil = localStorage.getItem('hideInstallPromptUntil');
     const permanentlyHidden = localStorage.getItem('hideInstallPromptPermanently');
     const currentDismissCount = localStorage.getItem('installPromptDismissCount');
@@ -31,7 +30,6 @@
     window.addEventListener('appinstalled', () => {
       showInstallButton = false;
       deferredPrompt = null;
-      // Limpiar todas las preferencias al instalar
       localStorage.removeItem('hideInstallPromptUntil');
       localStorage.removeItem('hideInstallPromptPermanently');
       localStorage.removeItem('installPromptDismissCount');
