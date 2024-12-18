@@ -154,8 +154,9 @@
   async function copiar(valor, tipo, index = null) {
     try {
 
+      let valorRedondeado = Math.round(valor * 100) / 100
       
-      await navigator.clipboard.writeText(valor)
+      await navigator.clipboard.writeText(valorRedondeado)
       
       switch (tipo) {
         case 'monto':
