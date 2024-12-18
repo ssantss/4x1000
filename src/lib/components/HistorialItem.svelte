@@ -1,5 +1,4 @@
 <script>
-  
   export let monto
   export let resultado
   export let fecha
@@ -12,7 +11,7 @@
 
 <button
   type="button"
-  class="relative w-full text-left bg-gray-50 dark:bg-gray-800 p-2 sm:p-3 rounded-lg flex items-center justify-between text-xs sm:text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+  class="relative w-full text-left bg-gray-50 dark:bg-gray-800 p-2 sm:p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
   on:click
 >
   {#if copiado}
@@ -26,11 +25,13 @@
       <div class="absolute inset-0 bg-white/30 dark:bg-gray-900/30 rounded-lg"></div>
     </div>
   {/if}
-  <div class="flex-1">
-    <span class="text-gray-600 dark:text-gray-400">El valor de 4x1000 de </span>
-    <span class="font-medium text-gray-800 dark:text-white">{formatearNumero(monto)}</span>
-    <span class="text-gray-600 dark:text-gray-400"> es: </span>
-    <span class="font-medium text-green-600 dark:text-green-400">{formatearNumero(resultado)    }</span>
+  <div class="flex flex-col">
+    <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">{fecha}</div>
+    <div class="text-sm">
+      <span class="text-gray-600 dark:text-gray-400">El valor de 4x1000 de </span>
+      <span class="font-medium text-gray-800 dark:text-white">{formatearNumero(monto)}</span>
+      <span class="text-gray-600 dark:text-gray-400"> es: </span>
+      <span class="font-medium text-green-600 dark:text-green-400">{formatearNumero(resultado)}</span>
+    </div>
   </div>
-  <div class="text-gray-500 dark:text-gray-400 text-xs ml-4 shrink-0">{fecha}</div>
 </button> 
