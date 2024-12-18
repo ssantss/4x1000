@@ -98,6 +98,7 @@
     }
 }
 
+
   function handleInput(event) {
     error = ''
     
