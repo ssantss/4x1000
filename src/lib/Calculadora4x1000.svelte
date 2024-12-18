@@ -276,6 +276,7 @@
                 copiado={copiadoImpuesto}
                 colorTexto="text-green-600"
                 darkColorTexto="dark:text-green-400"
+                isPulsing={true}
                 on:click={() => copiar(resultado, 'impuesto')}
               />
 
