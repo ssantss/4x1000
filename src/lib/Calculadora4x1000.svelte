@@ -35,6 +35,7 @@
     
     error = ''
     resultado = (monto * 4) / 1000
+    const montoDescontando = monto / (1 + 0.004)
     const nuevoHistorial = [{
       monto,
       resultado,
@@ -126,7 +127,7 @@
       style: 'currency',
       currency: 'COP',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      maximumFractionDigits: 2
     }).format(numero)
     .replace('COP', '$')
     .trim()
@@ -319,12 +320,12 @@
               />
 
               <ResultadoCard
-                titulo="Valor descontando 4x1000:"
-                valor={formatearNumero(monto - resultado)}
+                titulo="Valor a transferir descontando 4x1000:"
+                valor={formatearNumero(monto / (1 + 0.004))}
                 copiado={copiadoDescuento}
                 colorTexto="text-orange-600"
                 darkColorTexto="dark:text-orange-400"
-                on:click={() => copiar(monto - resultado, 'descuento')}
+                on:click={() => copiar(monto / (1 + 0.004), 'descuento')}
               />
 
               <ResultadoCard
