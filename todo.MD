@@ -37,3 +37,6 @@ Revisemos todo lo que tenemos y lo que podría faltar:
    - Feedback de instalación
 
 ¿Por cuál aspecto te gustaría empezar?
+
+- esta calculando mal los copiar!!!!
+- experimentar con el evento onchange para que calcule automaticamente le valor
