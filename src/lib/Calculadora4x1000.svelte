@@ -44,7 +44,6 @@
     historial = nuevoHistorial
     guardarHistorial(nuevoHistorial)
 
-    // Trackear el evento de cálculo
     try {
       if (window.umami) {
         umami.track('calculo_4x1000', { 

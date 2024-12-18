@@ -1,6 +1,7 @@
 <script>
   import Calculadora4x1000 from './lib/Calculadora4x1000.svelte'
   import Footer from './lib/Footer.svelte'
+  import InstallPWA from './lib/components/InstallPWA.svelte'
 </script>
 
 <div class="min-h-screen flex flex-col dark:bg-gray-900">
@@ -8,4 +9,5 @@
     <Calculadora4x1000 />
   </main>
   <Footer />
+  <InstallPWA />
 </div>

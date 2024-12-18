@@ -1,0 +1,21 @@
+{
+  "name": "4x1000",
+  "short_name": "4x1000",
+  "description": "Calcula el Gravamen a los Movimientos Financieros (GMF) en Colombia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "/icons/icon-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+} 
