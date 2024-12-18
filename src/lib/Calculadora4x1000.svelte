@@ -244,7 +244,7 @@
             <div class="relative">
               <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400">$</span>
               <input
-                type="tel"
+                type="number"
                 inputmode="numeric"
                 pattern="[0-9]*"
                 id="monto"
