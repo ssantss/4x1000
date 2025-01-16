@@ -320,9 +320,9 @@
                 on:click={() => copiar(resultado, 'impuesto')}
               />
 
-              <ResultadoCard
-                titulo="Valor a transferir incluyendo 4x1000:"
-                subtitulo="Valor que debes enviar para que lleguen {formatearNumero(monto)}."
+                <ResultadoCard
+                  titulo="Para transferir <strong>{formatearNumero(monto)}</strong> necesitas tener disponible:"
+                subtitulo="Valor que debes tener disponible para transferir <strong>{formatearNumero(monto)}</strong> incluyendo el 4x1000."
                 valor={formatearNumero(monto + resultado)}
                 copiado={copiadoTotal}
                 colorTexto="text-blue-600"
@@ -330,8 +330,8 @@
                 on:click={() => copiar(monto + resultado, 'total')}
               />
               <ResultadoCard
-              titulo="Valor disponible para transferir:"
-              subtitulo="Si tu cuenta tiene un saldo de {formatearNumero(monto)} , este es el máximo valor que puedes transferir incluyendo el 4x1000."
+              titulo="Si tienes en tu cuenta <strong>{formatearNumero(monto)}</strong>, este es el valor disponible para transferir:"
+              subtitulo="Si el monto de <strong>{formatearNumero(monto)}</strong> es tu saldo de la cuenta, este es el valor maximo que puedes transferir incluyendo el 4x1000."
               valor={formatearNumero(monto / (1 + 0.004))}
               copiado={copiadoDescuento}
               colorTexto="text-orange-600"

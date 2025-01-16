@@ -13,7 +13,7 @@
   on:click
   class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group {isPulsing ? 'pulse-animation' : ''}"
 >
-  <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">{titulo}</p>
+  <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">{@html titulo}</p>
 
   <p class="text-base sm:text-[clamp(14px,2vw,24px)] font-bold {colorTexto} {darkColorTexto}">{valor}</p>
   {#if copiado}
@@ -22,7 +22,7 @@
     </span>
   {/if}
   {#if subtitulo}
-  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 italic">{subtitulo}</p>
+  <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 italic">{@html subtitulo}</p>
 {/if}
 </button>
 
