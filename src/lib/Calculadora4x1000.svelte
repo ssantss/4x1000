@@ -321,8 +321,8 @@
                 on:click={() => copiar(monto + resultado, 'total')}
               />
               <ResultadoCard
-              titulo="Si tienes en tu cuenta <strong>{formatearNumeroSinPeso(monto)}</strong>, este es el valor disponible para transferir:"
-              subtitulo="Si el monto de <strong>{formatearNumeroSinPeso(monto)}</strong> es tu saldo de la cuenta, este es el valor maximo que puedes transferir incluyendo el 4x1000."
+              titulo="Si tienes en tu cuenta <strong>${formatearNumeroSinPeso(monto)}</strong>, este es el valor disponible para transferir:"
+              subtitulo="Si el monto de <strong>${formatearNumeroSinPeso(monto)}</strong> es tu saldo de la cuenta, este es el valor maximo que puedes transferir incluyendo el 4x1000."
               valor={formatearNumero(monto / (1 + 0.004))}
               copiado={copiadoDescuento}
               colorTexto="text-orange-600"
