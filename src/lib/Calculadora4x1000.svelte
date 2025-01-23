@@ -4,6 +4,7 @@
   import ResultadoCard from './components/ResultadoCard.svelte'
   import HistorialItem from './components/HistorialItem.svelte'
   import Instrucciones from './components/Instrucciones.svelte'
+  import { formatearNumero, formatearNumeroSinPeso } from '../utils/utils'
   
   let monto = $state(0)
   let resultado = $state(0)
@@ -120,17 +121,6 @@
     } else {
       inputValue = ''
     }
-  }
-
-  function formatearNumero(numero) {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }).format(numero)
-    .replace('COP', '$')
-    .trim()
   }
 
   function formatearMensajeWhatsApp(monto, resultado) {
@@ -321,8 +311,8 @@
               />
 
                 <ResultadoCard
-                  titulo="Para transferir <strong>{formatearNumero(monto)}</strong> necesitas tener disponible:"
-                subtitulo="Valor que debes tener disponible para transferir <strong>{formatearNumero(monto)}</strong> incluyendo el 4x1000."
+                  titulo="Para transferir <strong>${formatearNumeroSinPeso(monto)}</strong> necesitas tener disponible:"
+                subtitulo="Valor que debes tener disponible para transferir <strong>${formatearNumeroSinPeso(monto)}</strong> incluyendo el 4x1000."
                 valor={formatearNumero(monto + resultado)}
                 copiado={copiadoTotal}
                 colorTexto="text-blue-600"
@@ -330,8 +320,8 @@
                 on:click={() => copiar(monto + resultado, 'total')}
               />
               <ResultadoCard
-              titulo="Si tienes en tu cuenta <strong>{formatearNumero(monto)}</strong>, este es el valor disponible para transferir:"
-              subtitulo="Si el monto de <strong>{formatearNumero(monto)}</strong> es tu saldo de la cuenta, este es el valor maximo que puedes transferir incluyendo el 4x1000."
+              titulo="Si tienes en tu cuenta <strong>${formatearNumeroSinPeso(monto)}</strong>, este es el valor disponible para transferir:"
+              subtitulo="Si el monto de <strong>${formatearNumeroSinPeso(monto)}</strong> es tu saldo de la cuenta, este es el valor maximo que puedes transferir incluyendo el 4x1000."
               valor={formatearNumero(monto / (1 + 0.004))}
               copiado={copiadoDescuento}
               colorTexto="text-orange-600"
