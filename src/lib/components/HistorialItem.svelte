@@ -3,10 +3,8 @@
   export let resultado
   export let fecha
   export let copiado = false
+  import { formatearNumeroSinPeso } from '../../utils/utils'
 
-  function formatearNumero(numero) {
-    return numero.toLocaleString('es-ES', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
-  }
 </script>
 
 <button
@@ -29,9 +27,9 @@
     <div class="text-xs text-gray-500 dark:text-gray-400 mb-1">{fecha}</div>
     <div class="text-sm">
       <span class="text-gray-600 dark:text-gray-400">El valor de 4x1000 de </span>
-      <span class="font-medium text-gray-800 dark:text-white">{formatearNumero(monto)}</span>
+      <span class="font-medium text-gray-800 dark:text-white">${formatearNumeroSinPeso(monto)}</span>
       <span class="text-gray-600 dark:text-gray-400"> es: </span>
-      <span class="font-medium text-green-600 dark:text-green-400">{formatearNumero(resultado)}</span>
+      <span class="font-medium text-green-600 dark:text-green-400">${formatearNumeroSinPeso(resultado)}</span>
     </div>
   </div>
 </button> 
