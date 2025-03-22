@@ -213,7 +213,7 @@
   })
 </script>
 
-<div class="max-w-7xl mx-auto mt-10 p-4 md:p-8 dark:bg-gray-900">
+<div class="max-w-7xl mx-auto mt-10 md:p-2 dark:bg-gray-900">
   <DarkModeToggle {darkMode} on:click={toggleDarkMode}/>
   
   <div class="flex flex-col lg:flex-row gap-8">
