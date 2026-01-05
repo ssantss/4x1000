@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
+    "@prerenderer/renderer-jsdom": "^0.2.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "svelte": "^5.2.7",

@@ -4,6 +4,8 @@ import { createRequire } from 'node:module'
 
 const require = createRequire(import.meta.url)
 const prerender = require('vite-plugin-prerender')
+const Renderer = require('@prerenderer/renderer-jsdom')
+const PrerenderRenderer = Renderer.default || Renderer
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -12,6 +14,7 @@ export default defineConfig({
     prerender({
       staticDir: 'dist',
       renderTarget: '#app',
+      renderer: new PrerenderRenderer(),
       routes: [
         '/',
         '/como-calcular-4x1000/',
