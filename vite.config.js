@@ -1,6 +1,9 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
-import prerender from 'vite-plugin-prerender'
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
+const prerender = require('vite-plugin-prerender')
 
 // https://vite.dev/config/
 export default defineConfig({
