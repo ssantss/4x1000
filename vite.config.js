@@ -10,6 +10,7 @@ export default defineConfig({
   plugins: [
     svelte(),
     prerender({
+      staticDir: 'dist',
       renderTarget: '#app',
       routes: [
         '/',
