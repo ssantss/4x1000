@@ -132,7 +132,7 @@
 ➖ *Valor descontando 4x1000:* ${formatearNumero(monto - resultado)}
 ➕ *Valor incluyendo 4x1000:* ${formatearNumero(monto + resultado)}
 
-🌐 Calcula en: https://4x1000.co`
+🌐 Calcula en: https://www.4x1000.co`
   }
 
   function limpiar() {

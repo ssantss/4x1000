@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "4x1000.co"
+        }
+      ],
+      "destination": "https://www.4x1000.co/$1",
+      "permanent": true
+    }
+  ]
+}
