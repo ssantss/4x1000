@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { createRequire } from 'node:module'
+import path from 'node:path'
 
 const require = createRequire(import.meta.url)
 const prerender = require('vite-plugin-prerender')
@@ -12,7 +13,7 @@ export default defineConfig({
   plugins: [
     svelte(),
     prerender({
-      staticDir: 'dist',
+      staticDir: path.resolve(process.cwd(), 'dist'),
       renderTarget: '#app',
       renderer: new PrerenderRenderer(),
       routes: [
