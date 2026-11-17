@@ -7,8 +7,8 @@ const pesos = new Intl.NumberFormat('es-CO', {
 
 const plain = new Intl.NumberFormat('es-CO', { maximumFractionDigits: 2 })
 
-// $ 1.234.567,89 en formato colombiano
-export const formatCOP = (value) => pesos.format(value).replace(/ /g, ' ')
+// $ 1.234.567,89 en formato colombiano; el espacio tras el $ no se parte
+export const formatCOP = (value) => pesos.format(value)
 
 export const formatNumber = (value) => plain.format(value)
 

@@ -20,5 +20,8 @@
     "@astrojs/sitemap": "^3.7.5",
     "@astrojs/svelte": "^9.1.6",
     "astro": "^7.4.12"
+  },
+  "engines": {
+    "node": ">=22.23.4"
   }
 }

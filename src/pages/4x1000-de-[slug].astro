@@ -24,7 +24,7 @@ const scenarios = [
 const fits = (cap) => Math.floor(cap / value)
 const fitText = (cap) =>
   fits(cap) > 0
-    ? `caben ${fits(cap)} ${fits(cap) === 1 ? 'movimiento' : 'movimientos'} de ${formatCOP(value)} al mes antes de empezar a pagar`
+    ? `${fits(cap) === 1 ? 'cabe 1 movimiento' : `caben ${fits(cap)} movimientos`} de ${formatCOP(value)} al mes antes de empezar a pagar`
     : `un solo movimiento de ${formatCOP(value)} ya supera el tope y paga ${formatCOP(gmf(value, cap))}`
 
 const h1 = `¿Cuánto es el 4x1000 de ${label}?`

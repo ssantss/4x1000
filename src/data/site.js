@@ -59,7 +59,7 @@ export const AMOUNTS = [
     slug: '2-millones',
     value: 2_000_000,
     label: '2 millones de pesos',
-    context: 'Un monto cercano a un salario mínimo con auxilio de transporte, o a un arriendo mensual en ciudad.',
+    context: 'Un monto habitual para pagar un arriendo, una matrícula o una nómina pequeña por transferencia.',
   },
   {
     slug: '5-millones',

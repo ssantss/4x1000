@@ -40,8 +40,8 @@ export const SOURCES = {
     url: null,
   },
   smlmv: {
-    label: `Decreto 1469 de 2025 y Decreto 0159 de 2026 (salario mínimo ${TAX_YEAR})`,
-    url: 'https://normativa.colpensiones.gov.co/colpensiones/compilacion/docs/decreto_0159_2026.htm',
+    label: `Decreto 1469 de 2025 (salario mínimo ${TAX_YEAR})`,
+    url: null,
   },
   reform: {
     label: 'Portafolio: cambios del 4x1000 desde el 13 de diciembre (Ley 2277 de 2022, art. 65)',

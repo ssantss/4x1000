@@ -83,6 +83,13 @@
   )
 </script>
 
+{#snippet row(label, value, tone = '')}
+  <div class="flex justify-between gap-4 py-3">
+    <dt>{label}</dt>
+    <dd class="whitespace-nowrap font-semibold tabular-nums {tone}">{formatCOP(value)}</dd>
+  </div>
+{/snippet}
+
 <div class="grid gap-4 lg:grid-cols-2 lg:gap-6">
   <section class="card space-y-6" aria-label="Datos del cálculo">
     <Segmented legend="¿Qué quieres calcular?" name="mode" options={MODES} bind:value={mode} />
@@ -136,47 +143,23 @@
 
       <dl class="mt-6 divide-y divide-slate-200 text-sm dark:divide-slate-800">
         {#if mode === 'amount'}
-          <div class="flex justify-between gap-4 py-3">
-            <dt>Valor del movimiento {period === 'year' ? '(12 meses)' : ''}</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(amount * factor)}</dd>
-          </div>
+          {@render row(`Valor del movimiento${period === 'year' ? ' (12 meses)' : ''}`, amount * factor)}
         {:else}
-          <div class="flex justify-between gap-4 py-3">
-            <dt>Llega al destino {period === 'year' ? '(12 meses)' : ''}</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(amount * factor)}</dd>
-          </div>
-          <div class="flex justify-between gap-4 py-3">
-            <dt>4x1000 {periodWord}</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(tax)}</dd>
-          </div>
+          {@render row(`Llega al destino${period === 'year' ? ' (12 meses)' : ''}`, amount * factor)}
+          {@render row(`4x1000 ${periodWord}`, tax)}
         {/if}
         {#if exempt}
-          <div class="flex justify-between gap-4 py-3">
-            <dt>Parte exenta</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">{formatCOP(exemptPart)}</dd>
-          </div>
-          <div class="flex justify-between gap-4 py-3">
-            <dt>Parte gravada</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(taxed)}</dd>
-          </div>
+          {@render row('Parte exenta', exemptPart, 'text-emerald-700 dark:text-emerald-400')}
+          {@render row('Parte gravada', taxed)}
         {/if}
         {#if mode === 'amount'}
-          <div class="flex justify-between gap-4 py-3">
-            <dt>Total que sale de tu cuenta</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(debit)}</dd>
-          </div>
+          {@render row('Total que sale de tu cuenta', debit)}
           {#if period === 'month'}
-            <div class="flex justify-between gap-4 py-3">
-              <dt>Si ese valor es todo tu saldo, puedes enviar hasta</dt>
-              <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(balanceMax)}</dd>
-            </div>
+            {@render row('Si ese valor es todo tu saldo, puedes enviar hasta', balanceMax)}
           {/if}
         {/if}
         {#if period === 'year'}
-          <div class="flex justify-between gap-4 py-3">
-            <dt>Deducible en renta (50 % del GMF)</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(toCents(tax * DEDUCTIBLE_SHARE))}</dd>
-          </div>
+          {@render row('Deducible en renta (50 % del GMF)', toCents(tax * DEDUCTIBLE_SHARE))}
         {/if}
       </dl>
 

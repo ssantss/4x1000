@@ -62,6 +62,13 @@
   onMount(() => history.load())
 </script>
 
+{#snippet row(label, value, tone = '')}
+  <div class="flex justify-between gap-4 py-3">
+    <dt>{label}</dt>
+    <dd class="whitespace-nowrap font-semibold tabular-nums {tone}">{formatCOP(value)}</dd>
+  </div>
+{/snippet}
+
 <div class="grid gap-4 lg:grid-cols-2 lg:gap-6">
   <section class="card space-y-6" aria-label="Datos del cálculo">
     <MoneyInput
@@ -95,20 +102,11 @@
         {formatCOP(result.total)}
       </p>
       <dl class="mt-6 divide-y divide-slate-200 text-sm dark:divide-slate-800">
-        <div class="flex justify-between gap-4 py-3">
-          <dt>Ingreso Base de Cotización (IBC)</dt>
-          <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(toCents(result.ibc))}</dd>
-        </div>
-        {#each result.rows as row}
-          <div class="flex justify-between gap-4 py-3">
-            <dt>{row.label}</dt>
-            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(toCents(row.value))}</dd>
-          </div>
+        {@render row('Ingreso Base de Cotización (IBC)', toCents(result.ibc))}
+        {#each result.rows as item}
+          {@render row(item.label, toCents(item.value))}
         {/each}
-        <div class="flex justify-between gap-4 py-3">
-          <dt>Ingreso neto después de aportes</dt>
-          <dd class="whitespace-nowrap font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">{formatCOP(toCents(result.net))}</dd>
-        </div>
+        {@render row('Ingreso neto después de aportes', toCents(result.net), 'text-emerald-700 dark:text-emerald-400')}
       </dl>
     {:else}
       <p class="text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">Resultado</p>

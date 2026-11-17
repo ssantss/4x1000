@@ -53,6 +53,6 @@ describe('formato', () => {
   })
 
   it('escribe pesos colombianos', () => {
-    expect(formatCOP(1_004_000)).toBe('$ 1.004.000')
+    expect(formatCOP(1_004_000)).toBe('$\u00a01.004.000')
   })
 })

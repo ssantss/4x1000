@@ -5,7 +5,13 @@
   let { id, label, hint = '', text = $bindable(''), placeholder = '0' } = $props()
 
   function onInput(event) {
-    const raw = event.currentTarget.value.replace(/\./g, '').replace(/[^0-9,]/g, '')
+    // Un punto recién tecleado cuenta como coma decimal (teclados que sólo ofrecen «.»)
+    let value = event.currentTarget.value
+    if (event.data === '.' && !value.includes(',')) {
+      const at = event.currentTarget.selectionStart - 1
+      value = value.slice(0, at) + ',' + value.slice(at + 1)
+    }
+    const raw = value.replace(/\./g, '').replace(/[^0-9,]/g, '')
     const [int, ...rest] = raw.split(',')
     const intText = int ? formatNumber(Number(int)) : ''
     text = rest.length ? `${intText || '0'},${rest.join('').slice(0, 2)}` : intText
