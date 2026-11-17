@@ -7,10 +7,10 @@ import { UPDATED_LABEL } from '../data/tax.js'
 import { article, breadcrumbList, faqPage } from '../lib/schema.js'
 
 // Plantilla de guía: migas, H1, Article + BreadcrumbList (+ FAQPage y extras)
-const { title, h1, description, lead, faq = [], sources, extraJsonLd = [], crumb = h1 } = Astro.props
+const { title, h1, description, lead, faq = [], sources, extraJsonLd = [], crumb = h1, published } = Astro.props
 const path = Astro.url.pathname
 const jsonLd = [
-  article({ title: h1, description, path }),
+  article({ title: h1, description, path, published }),
   breadcrumbList([{ name: 'Guías', path: '/guias/' }, { name: crumb, path }]),
   ...(faq.length ? [faqPage(faq)] : []),
   ...extraJsonLd,

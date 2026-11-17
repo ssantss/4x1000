@@ -1,0 +1,85 @@
+---
+import Guide from '../layouts/Guide.astro'
+import { AMOUNTS, amountPath } from '../data/site.js'
+import { EXEMPT_CAP, LOW_AMOUNT_CAP, EXEMPT_UVT, LOW_AMOUNT_UVT, DEDUCTIBLE_SHARE, TAX_YEAR } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { gmf, totalDebit, maxTransfer, yearlyGmf, taxableAmount } from '../lib/gmf.js'
+
+export function getStaticPaths() {
+  return AMOUNTS.map((amount, i) => ({
+    params: { slug: amount.slug },
+    props: { amount, prev: AMOUNTS[i - 1], next: AMOUNTS[i + 1] },
+  }))
+}
+
+const { amount, prev, next } = Astro.props
+const { value, label, context } = amount
+const plain = gmf(value)
+const scenarios = [
+  { name: 'Cuenta sin exención', cap: 0 },
+  { name: `Cuenta exenta (${EXEMPT_UVT} UVT)`, cap: EXEMPT_CAP },
+  { name: `Nequi / Daviplata (${LOW_AMOUNT_UVT} UVT)`, cap: LOW_AMOUNT_CAP },
+]
+// Cuántos movimientos de este tamaño caben en cada tope mensual
+const fits = (cap) => Math.floor(cap / value)
+const fitText = (cap) =>
+  fits(cap) > 0
+    ? `caben ${fits(cap)} ${fits(cap) === 1 ? 'movimiento' : 'movimientos'} de ${formatCOP(value)} al mes antes de empezar a pagar`
+    : `un solo movimiento de ${formatCOP(value)} ya supera el tope y paga ${formatCOP(gmf(value, cap))}`
+
+const h1 = `¿Cuánto es el 4x1000 de ${label}?`
+const description = `El 4x1000 de ${formatCOP(value)} es ${formatCOP(plain)}. Para enviarlos necesitas ${formatCOP(totalDebit(value))}. Con cuenta exenta en ${TAX_YEAR} pagas ${formatCOP(gmf(value, EXEMPT_CAP))}.`
+const faq = [
+  {
+    q: `¿Cuánto es el 4x1000 de ${formatCOP(value)}?`,
+    a: `${formatCOP(plain)}. Es el 0,4 % de ${formatCOP(value)}, así que necesitas ${formatCOP(totalDebit(value))} en la cuenta para moverlos.`,
+  },
+  {
+    q: `¿Cuánto pago de 4x1000 por ${formatCOP(value)} con cuenta exenta?`,
+    a: `${formatCOP(gmf(value, EXEMPT_CAP))} si es todo lo que sale de la cuenta en el mes, porque el tope exento ${TAX_YEAR} es ${formatCOP(EXEMPT_CAP)}. En Nequi o Daviplata, con tope de ${formatCOP(LOW_AMOUNT_CAP)}, pagas ${formatCOP(gmf(value, LOW_AMOUNT_CAP))}.`,
+  },
+]
+---
+
+<Guide
+  title={`4x1000 de ${label} (${TAX_YEAR}): ${formatCOP(plain)}`}
+  h1={h1}
+  crumb={`4x1000 de ${label}`}
+  description={description}
+  lead={`El 4x1000 de ${formatCOP(value)} es ${formatCOP(plain)}. ${context}`}
+  faq={faq}
+  sources={['rate', 'exemption', 'uvt']}
+>
+  <div class="grid gap-3 sm:grid-cols-3">
+    <div class="card"><p class="text-sm text-slate-500 dark:text-slate-400">4x1000</p><p class="text-2xl font-extrabold tabular-nums text-blue-700 dark:text-blue-400">{formatCOP(plain)}</p></div>
+    <div class="card"><p class="text-sm text-slate-500 dark:text-slate-400">Debes tener en la cuenta</p><p class="text-2xl font-extrabold tabular-nums">{formatCOP(totalDebit(value))}</p></div>
+    <div class="card"><p class="text-sm text-slate-500 dark:text-slate-400">Si es todo tu saldo, envías</p><p class="text-2xl font-extrabold tabular-nums">{formatCOP(maxTransfer(value))}</p></div>
+  </div>
+
+  <h2>Con y sin exención</h2>
+  <p>Suponiendo que estos {formatCOP(value)} son todo lo que sale de la cuenta en el mes:</p>
+  <table>
+    <thead><tr><th scope="col">Tipo de cuenta</th><th scope="col">Parte gravada</th><th scope="col">4x1000</th></tr></thead>
+    <tbody>
+      {scenarios.map((s) => (
+        <tr><td>{s.name}</td><td>{formatCOP(taxableAmount(value, s.cap))}</td><td>{formatCOP(gmf(value, s.cap))}</td></tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>¿Cuántas veces al mes sin pagar?</h2>
+  <ul>
+    <li>Con cuenta exenta (tope de {formatCOP(EXEMPT_CAP)}): {fitText(EXEMPT_CAP)}.</li>
+    <li>En Nequi o Daviplata (tope de {formatCOP(LOW_AMOUNT_CAP)}): {fitText(LOW_AMOUNT_CAP)}.</li>
+  </ul>
+
+  <h2>Si lo mueves cada mes</h2>
+  <p>Mover {formatCOP(value)} todos los meses cuesta {formatCOP(yearlyGmf(value))} de 4x1000 al año sin exención, y {formatCOP(yearlyGmf(value, EXEMPT_CAP))} con cuenta exenta. El 50 % de lo que pagues es deducible en renta: hasta {formatCOP(yearlyGmf(value) * DEDUCTIBLE_SHARE)} en el caso sin exención (<a href="/deducir-4x1000-renta/">cómo deducirlo</a>).</p>
+
+  <p><a href={`/?monto=${value}`}>Abre la calculadora con {formatCOP(value)}</a> para cambiar la exención, verlo al revés (cuánto debe llegar) o ver el año completo.</p>
+
+  <nav aria-label="Otros montos" class="mt-8 flex flex-wrap justify-between gap-3">
+    {prev ? <a href={amountPath(prev.slug)}>← 4x1000 de {prev.label}</a> : <span />}
+    {next && <a href={amountPath(next.slug)}>4x1000 de {next.label} →</a>}
+  </nav>
+</Guide>

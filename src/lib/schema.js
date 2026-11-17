@@ -54,7 +54,7 @@ export function breadcrumbList(crumbs) {
   }
 }
 
-export function article({ title, description, path }) {
+export function article({ title, description, path, published = UPDATED_ISO }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -63,7 +63,7 @@ export function article({ title, description, path }) {
     url: absolute(path),
     mainEntityOfPage: absolute(path),
     inLanguage: 'es-CO',
-    datePublished: '2026-01-05',
+    datePublished: published,
     dateModified: UPDATED_ISO,
     author: organization,
     publisher: organization,

@@ -24,15 +24,15 @@
   .prose-guide h3 {
     @apply mt-6 mb-2 text-lg font-semibold text-slate-900 dark:text-white;
   }
-  .prose-guide p,
-  .prose-guide ul,
-  .prose-guide ol {
+  .prose-guide > p,
+  .prose-guide > ul,
+  .prose-guide > ol {
     @apply mb-4 leading-relaxed;
   }
-  .prose-guide ul {
+  .prose-guide > ul {
     @apply list-disc pl-6 space-y-1;
   }
-  .prose-guide ol {
+  .prose-guide > ol {
     @apply list-decimal pl-6 space-y-1;
   }
   .prose-guide a {
