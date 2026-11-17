@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro'
+import Faq from '../components/Faq.astro'
+import Sources from '../components/Sources.astro'
+import SocialSecurityCalculator from '../lib/SocialSecurityCalculator.svelte'
+import { SMLMV, TAX_YEAR } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { faqPage, webApplication } from '../lib/schema.js'
+
+const title = `Calculadora de seguridad social para independientes ${TAX_YEAR}`
+const description = `Calcula tus aportes a salud, pensión, ARL y Fondo de Solidaridad Pensional como independiente en Colombia, con el salario mínimo ${TAX_YEAR} de ${formatCOP(SMLMV)}.`
+const faq = [
+  {
+    q: '¿Sobre qué valor cotiza un independiente?',
+    a: `Sobre el Ingreso Base de Cotización (IBC), que es el 40 % del ingreso bruto mensual. No puede ser menor a un salario mínimo (${formatCOP(SMLMV)} en ${TAX_YEAR}) ni mayor a 25 salarios mínimos.`,
+  },
+  {
+    q: '¿Qué porcentajes se pagan?',
+    a: '12,5 % para salud y 16 % para pensión sobre el IBC, más la ARL según el nivel de riesgo de tu actividad (de 0,522 % en nivel I a 6,96 % en nivel V).',
+  },
+  {
+    q: '¿Cuándo se paga el Fondo de Solidaridad Pensional?',
+    a: 'Cuando el IBC supera 4 salarios mínimos. El aporte va del 1 % al 2 % del IBC, según cuántos salarios mínimos sea.',
+  },
+]
+const jsonLd = [
+  webApplication({ name: 'Calculadora de seguridad social para independientes', description, path: '/seguridad-social/' }),
+  faqPage(faq),
+]
+---
+
+<Base title={title} description={description} jsonLd={jsonLd}>
+  <header class="mb-6 max-w-3xl">
+    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">Calculadora de seguridad social para independientes {TAX_YEAR}</h1>
+    <p class="mt-3 text-lg text-slate-700 dark:text-slate-300">
+      Escribe tu ingreso mensual bruto y mira cuánto te toca pagar de salud, pensión, ARL y Fondo de Solidaridad Pensional.
+    </p>
+    <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+      Salario mínimo {TAX_YEAR}: {formatCOP(SMLMV)} (Decreto 1469 de 2025 y Decreto 0159 de 2026).
+    </p>
+  </header>
+
+  <SocialSecurityCalculator client:load />
+
+  <Faq items={faq} />
+  <Sources keys={['smlmv']} />
+</Base>

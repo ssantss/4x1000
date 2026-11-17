@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.4x1000.co/sitemap.xml 
+
+Sitemap: https://www.4x1000.co/sitemap-index.xml

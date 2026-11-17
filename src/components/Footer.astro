@@ -1,0 +1,29 @@
+---
+import { GUIDES } from '../data/site.js'
+---
+
+<footer class="border-t border-slate-200 bg-white py-10 text-sm dark:border-slate-800 dark:bg-slate-900">
+  <div class="mx-auto max-w-6xl px-4">
+    <nav aria-label="Guías" class="mb-8">
+      <ul class="grid gap-x-6 gap-y-1 sm:grid-cols-2 lg:grid-cols-3">
+        <li><a class="inline-flex min-h-11 items-center text-slate-600 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400" href="/">Calculadora 4x1000</a></li>
+        <li><a class="inline-flex min-h-11 items-center text-slate-600 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400" href="/seguridad-social/">Calculadora de seguridad social</a></li>
+        {GUIDES.map((g) => (
+          <li><a class="inline-flex min-h-11 items-center text-slate-600 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-400" href={g.path}>{g.title}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <p class="text-center text-slate-600 dark:text-slate-400">
+      © 2026 4x1000.co · Información de referencia, no constituye asesoría tributaria.
+    </p>
+    <p class="mt-2 text-center text-xs text-slate-500 dark:text-slate-400">
+      Desarrollado por <a
+        href="https://santiago.paicoders.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Disponible para proyectos y ofertas laborales"
+        class="font-semibold text-slate-500 hover:text-amber-500 hover:underline dark:text-slate-400 dark:hover:text-amber-400"
+      ><strong>Santiago</strong></a>
+    </p>
+  </div>
+</footer>
