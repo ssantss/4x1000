@@ -71,7 +71,7 @@
 
     <button
       onclick={hidePrompt}
-      class="absolute -top-2 -right-2 p-1.5 bg-white dark:bg-gray-800 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 rounded-full shadow-sm"
+      class="absolute -top-2 -right-2 p-1.5 bg-white dark:bg-gray-950 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 rounded-full shadow-sm"
       aria-label="Cerrar"
     >
       <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

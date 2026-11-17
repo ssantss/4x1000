@@ -1,4 +1,4 @@
-<div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8 lg:mb-0">
+<div class="bg-white dark:bg-gray-950 rounded-xl shadow-lg p-6 mb-8 lg:mb-0">
   <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">¿Cómo calcular el impuesto 4×1000?</h2>
   <p class="text-gray-600 dark:text-gray-300 mb-8">Sigue estos tres pasos fácil y rápido</p>
   

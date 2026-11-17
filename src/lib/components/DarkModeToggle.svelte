@@ -4,7 +4,7 @@
 
 <button
   on:click
-  class="fixed right-0 top-0 p-2 rounded-bl-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors z-50"
+  class="fixed right-0 top-0 p-2 rounded-bl-lg bg-gray-100 dark:bg-gray-900 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors z-50"
   title={darkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
 >
   {#if darkMode}

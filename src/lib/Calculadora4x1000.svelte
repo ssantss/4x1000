@@ -213,7 +213,7 @@
   })
 </script>
 
-<div class="max-w-7xl mx-auto mt-10 md:p-2 dark:bg-gray-900">
+<div class="max-w-7xl mx-auto md:p-2 dark:bg-black">
   <DarkModeToggle {darkMode} on:click={toggleDarkMode}/>
   
   <div class="flex flex-col lg:flex-row gap-8">
@@ -222,13 +222,13 @@
     </div>
 
     <div class="lg:w-2/3 order-1 lg:order-none">
-      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 md:p-8">
+      <div class="bg-white dark:bg-gray-950 rounded-xl shadow-2xl p-6 md:p-8">
         <div class="mb-2 text-center">
           <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">Calculadora 4x1000</h2>
           <p class="text-gray-600 dark:text-gray-400">Calcula el Gravamen a los Movimientos Financieros (GMF)</p>
         </div>
 
-        <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg mb-6">
+        <div class="bg-gray-50 dark:bg-gray-900 p-6 rounded-lg mb-6">
           <div class="mb-6">
             <label class="block text-gray-700 dark:text-gray-300 text-sm font-semibold mb-2" for="monto">
               Monto a calcular
@@ -243,7 +243,7 @@
                 value={inputValue}
                 oninput={handleInput}
                 onkeypress={handleKeyPress}
-                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white text-lg font-medium overflow-x-auto"
+                class="pl-8 w-full py-3 px-4 bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 text-gray-800 dark:text-white text-lg font-medium overflow-x-auto"
                 placeholder="Ingrese el valor"
                 autocomplete="off"
               />
@@ -291,7 +291,7 @@
         </div>
 
         {#if resultado > 0}
-          <div class="bg-blue-50 dark:bg-blue-900/20 border-blue-100 dark:border-blue-800 rounded-lg p-4 sm:p-6 mb-6">
+          <div class="bg-blue-50 dark:bg-blue-950/20 border-blue-100 dark:border-blue-900 rounded-lg p-4 sm:p-6 mb-6">
             <h3 class="text-lg font-semibold text-blue-900 dark:text-white mb-4">Resultado del cálculo</h3>
             <div class="space-y-3">
               <ResultadoCard
@@ -364,7 +364,7 @@
         {/if}
 
         {#if historial.length > 0}
-          <div class="border-t border-gray-200 dark:border-gray-700 pt-4 sm:pt-6">
+          <div class="border-t border-gray-200 dark:border-gray-800 pt-4 sm:pt-6">
             <div class="flex justify-between items-center mb-3 sm:mb-4">
               <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-white">
                 Últimos cálculos

@@ -11,7 +11,7 @@
 <button
   type="button"
   on:click
-  class="w-full text-left bg-white dark:bg-gray-800 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative group {isPulsing ? 'pulse-animation' : ''}"
+  class="w-full text-left bg-white dark:bg-gray-950 p-3 sm:p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors relative group {isPulsing ? 'pulse-animation' : ''}"
 >
   <p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-1">{@html titulo}</p>
 

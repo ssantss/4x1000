@@ -9,7 +9,7 @@
 
 <button
   type="button"
-  class="relative w-full text-left bg-gray-50 dark:bg-gray-800 p-2 sm:p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 cursor-pointer"
+  class="relative w-full text-left bg-gray-50 dark:bg-gray-950 p-2 sm:p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 cursor-pointer"
   on:click
 >
   {#if copiado}
@@ -20,7 +20,7 @@
         </svg>
         Copiado
       </span>
-      <div class="absolute inset-0 bg-white/30 dark:bg-gray-900/30 rounded-lg"></div>
+      <div class="absolute inset-0 bg-white/30 dark:bg-black/30 rounded-lg"></div>
     </div>
   {/if}
   <div class="flex flex-col">

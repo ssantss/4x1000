@@ -1,4 +1,4 @@
-<footer class="py-6 text-center text-gray-600 dark:text-gray-400 text-sm mt-auto border-t border-gray-200 dark:border-gray-700">
+<footer class="py-6 text-center text-gray-600 dark:text-gray-400 text-sm mt-auto border-t border-gray-200 dark:border-gray-800">
   <p class="flex flex-col items-center gap-2">
     <span class="flex items-center gap-2">
       Hecho con 
