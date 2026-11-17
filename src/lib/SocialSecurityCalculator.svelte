@@ -97,17 +97,17 @@
       <dl class="mt-6 divide-y divide-slate-200 text-sm dark:divide-slate-800">
         <div class="flex justify-between gap-4 py-3">
           <dt>Ingreso Base de Cotización (IBC)</dt>
-          <dd class="font-semibold tabular-nums">{formatCOP(toCents(result.ibc))}</dd>
+          <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(toCents(result.ibc))}</dd>
         </div>
         {#each result.rows as row}
           <div class="flex justify-between gap-4 py-3">
             <dt>{row.label}</dt>
-            <dd class="font-semibold tabular-nums">{formatCOP(toCents(row.value))}</dd>
+            <dd class="whitespace-nowrap font-semibold tabular-nums">{formatCOP(toCents(row.value))}</dd>
           </div>
         {/each}
         <div class="flex justify-between gap-4 py-3">
           <dt>Ingreso neto después de aportes</dt>
-          <dd class="font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">{formatCOP(toCents(result.net))}</dd>
+          <dd class="whitespace-nowrap font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">{formatCOP(toCents(result.net))}</dd>
         </div>
       </dl>
     {:else}
