@@ -1,0 +1,49 @@
+---
+import Guide from '../layouts/Guide.astro'
+import { FAQ_RATE } from '../data/faq.js'
+import { AMOUNTS, amountPath } from '../data/site.js'
+import { EXEMPT_CAP, LOW_AMOUNT_CAP, TAX_YEAR } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { gmf, totalDebit } from '../lib/gmf.js'
+
+const values = [50_000, 100_000, 250_000, 500_000, 1_000_000, 2_000_000, 3_000_000, 5_000_000, 10_000_000, 20_000_000, 50_000_000, 100_000_000]
+const pages = new Map(AMOUNTS.map((a) => [a.value, amountPath(a.slug)]))
+const description = `Tabla del 4x1000 ${TAX_YEAR}: GMF de los montos más comunes, cuánto necesitas en la cuenta y cuánto pagas con cuenta exenta o en Nequi y Daviplata.`
+---
+
+<Guide
+  title={`Tabla del 4x1000 ${TAX_YEAR} por montos`}
+  h1={`Tabla del 4x1000 por montos (${TAX_YEAR})`}
+  crumb="Tabla del 4x1000"
+  description={description}
+  lead="El 4x1000 siempre es el 0,4 % del valor que sale de la cuenta. Esta tabla te da los montos más comunes, sin exención y con los topes exentos del año, suponiendo que es todo lo que sale de esa cuenta en el mes."
+  faq={[FAQ_RATE]}
+  sources={['rate', 'exemption', 'uvt']}
+>
+  <div class="-mx-4 overflow-x-auto px-4">
+    <table>
+      <caption class="sr-only">4x1000 por monto, con y sin exención</caption>
+      <thead>
+        <tr>
+          <th scope="col">Monto</th>
+          <th scope="col">4x1000</th>
+          <th scope="col">Debes tener</th>
+          <th scope="col">Con cuenta exenta</th>
+          <th scope="col">Nequi / Daviplata</th>
+        </tr>
+      </thead>
+      <tbody>
+        {values.map((m) => (
+          <tr>
+            <td>{pages.has(m) ? <a href={pages.get(m)}>{formatCOP(m)}</a> : formatCOP(m)}</td>
+            <td>{formatCOP(gmf(m))}</td>
+            <td>{formatCOP(totalDebit(m))}</td>
+            <td>{formatCOP(gmf(m, EXEMPT_CAP))}</td>
+            <td>{formatCOP(gmf(m, LOW_AMOUNT_CAP))}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>«Con cuenta exenta» descuenta el tope de {formatCOP(EXEMPT_CAP)} al mes; «Nequi / Daviplata», el de {formatCOP(LOW_AMOUNT_CAP)} de los depósitos de bajo monto. Para otro valor, usa la <a href="/">calculadora 4x1000</a>.</p>
+</Guide>

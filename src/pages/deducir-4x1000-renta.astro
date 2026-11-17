@@ -1,0 +1,45 @@
+---
+import Guide from '../layouts/Guide.astro'
+import { FAQ_DEDUCTION } from '../data/faq.js'
+import { DEDUCTIBLE_SHARE, TAX_YEAR } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { yearlyGmf } from '../lib/gmf.js'
+
+const monthly = 5_000_000
+const paid = yearlyGmf(monthly)
+const deductible = paid * DEDUCTIBLE_SHARE
+const description = 'El 50 % del 4x1000 que pagaste en el año es deducible en la declaración de renta (art. 115 del Estatuto Tributario). Cómo calcularlo y qué certificado pedir.'
+const faq = [
+  FAQ_DEDUCTION,
+  {
+    q: '¿La deducción me devuelve la mitad del 4x1000?',
+    a: 'No. La deducción resta de la base sobre la que se calcula el impuesto de renta; no es una devolución en efectivo. Cuánto te ahorras depende de tu tarifa de renta.',
+  },
+]
+---
+
+<Guide
+  title="Cómo deducir el 4x1000 en la declaración de renta"
+  h1="Cómo deducir el 4x1000 en la declaración de renta"
+  crumb="Deducir el 4x1000"
+  description={description}
+  lead="El 4x1000 que pagas durante el año no se pierde del todo: el 50 % de lo efectivamente pagado se puede restar como deducción en la declaración de renta, según el artículo 115 del Estatuto Tributario."
+  faq={faq}
+  sources={['deduction', 'rate']}
+>
+  <h2>Cuánto puedes deducir</h2>
+  <p>La mitad del GMF que pagaste en el año gravable. Ejemplo: si mueves {formatCOP(monthly)} al mes por una cuenta sin exención, pagas {formatCOP(paid)} de 4x1000 al año y puedes deducir <strong>{formatCOP(deductible)}</strong>.</p>
+  <p>Ojo: es una deducción, no una devolución. Reduce la base sobre la que se calcula tu impuesto de renta; lo que ahorras en impuesto depende de tu tarifa.</p>
+
+  <h2>Paso a paso</h2>
+  <ol>
+    <li>Pide a cada banco el certificado tributario del año con el GMF que te cobraron.</li>
+    <li>Suma el GMF de todas tus cuentas.</li>
+    <li>Multiplica el total por 0,5: ese es el valor deducible.</li>
+    <li>Inclúyelo en la declaración de renta o pásaselo a tu contador.</li>
+  </ol>
+
+  <h2>Estima el valor antes de tener el certificado</h2>
+  <p>Usa la <a href="/">calculadora</a> en vista «Anual»: muestra el 4x1000 de doce meses y la parte deducible. Si tu cuenta está marcada como exenta, actívalo para que descuente el tope de cada mes.</p>
+  <p class="note">Esta guía es de referencia para {TAX_YEAR}. Si declaras con cédulas, rentas exentas u otros beneficios, revisa tu caso con un contador.</p>
+</Guide>

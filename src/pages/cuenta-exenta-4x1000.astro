@@ -1,0 +1,46 @@
+---
+import Guide from '../layouts/Guide.astro'
+import { FAQ_MULTIPLE_ACCOUNTS } from '../data/faq.js'
+import { EXEMPT_CAP, EXEMPT_UVT, TAX_YEAR } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { gmf } from '../lib/gmf.js'
+
+const description = `Cómo marcar una cuenta exenta del 4x1000: qué productos aplican, qué preguntarle al banco y cuánto te ahorras con el tope de ${formatCOP(EXEMPT_CAP)} al mes en ${TAX_YEAR}.`
+const monthly = 3_000_000
+const faq = [
+  {
+    q: '¿Qué cuentas se pueden marcar como exentas del 4x1000?',
+    a: 'El numeral 1 del artículo 879 del Estatuto Tributario habla de cuentas de ahorro, depósitos electrónicos y tarjetas prepago. Si tu producto es de otro tipo, pregúntale al banco si aplica.',
+  },
+  FAQ_MULTIPLE_ACCOUNTS,
+]
+---
+
+<Guide
+  title={`Cómo marcar tu cuenta exenta del 4x1000 (${TAX_YEAR})`}
+  h1="Cómo marcar tu cuenta exenta del 4x1000"
+  crumb="Cuenta exenta"
+  description={description}
+  lead={`Marcar una cuenta como exenta hace que los primeros ${formatCOP(EXEMPT_CAP)} que salgan de ella cada mes no paguen 4x1000. El trámite se hace con el banco y el proceso cambia de una entidad a otra, así que aquí te decimos qué pedir y qué confirmar.`}
+  faq={faq}
+  sources={['exemption', 'uvt', 'reform']}
+>
+  <h2>Qué productos pueden marcarse</h2>
+  <p>Según el artículo 879 (numeral 1) del Estatuto Tributario, la exención de {EXEMPT_UVT} UVT mensuales aplica a <strong>cuentas de ahorro, depósitos electrónicos y tarjetas prepago</strong> marcadas como exentas.</p>
+
+  <h2>Cómo pedirla</h2>
+  <ol>
+    <li>Elige la cuenta que más uses para retiros y pagos: es la que más te ahorra.</li>
+    <li>Pide a tu banco que la marque como exenta del GMF. Según la entidad, se hace en la app, en la línea de atención o en una oficina.</li>
+    <li>Pregunta si ya tienes otra cuenta marcada, en ese banco o en otro, y cómo se reparte el tope.</li>
+    <li>Confirma desde qué fecha queda activa y revisa tu extracto del mes siguiente: no debería aparecer el cobro del GMF mientras no pases el tope.</li>
+  </ol>
+  <p class="note">El trámite cambia según el banco. Lo que sí es igual para todos es el tope legal: {EXEMPT_UVT} UVT al mes, {formatCOP(EXEMPT_CAP)} en {TAX_YEAR}.</p>
+
+  <h2>Cuánto te ahorras</h2>
+  <p>Si sacas {formatCOP(monthly)} al mes de una cuenta sin marcar, pagas {formatCOP(gmf(monthly))} al mes y {formatCOP(gmf(monthly) * 12)} al año. Con la cuenta marcada, ese monto está por debajo del tope y pagas $ 0.</p>
+  <p>Si te pasas del tope, sólo pagas sobre el excedente: con {formatCOP(20_000_000)} en un mes, el 4x1000 baja de {formatCOP(gmf(20_000_000))} a {formatCOP(gmf(20_000_000, EXEMPT_CAP))}. Puedes probar tu caso con la casilla «Mi cuenta está marcada como exenta» de la <a href="/">calculadora</a>.</p>
+
+  <h2>¿Una o varias cuentas?</h2>
+  <p>El Estatuto Tributario habla de una sola cuenta beneficiada; según la prensa, la Ley 2277 de 2022 permite desde diciembre de 2024 repartir el tope entre varias, si el banco lo implementó. Lo explicamos en <a href="/exenciones-4x1000/">exenciones del 4x1000</a>. Confirma con tu banco cuál aplica en tu caso.</p>
+</Guide>

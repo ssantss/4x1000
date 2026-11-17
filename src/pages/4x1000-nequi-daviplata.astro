@@ -1,0 +1,45 @@
+---
+import Guide from '../layouts/Guide.astro'
+import { FAQ_LOW_AMOUNT } from '../data/faq.js'
+import { LOW_AMOUNT_CAP, LOW_AMOUNT_UVT, EXEMPT_CAP, TAX_YEAR, UVT } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { gmf } from '../lib/gmf.js'
+
+const description = `Nequi y Daviplata no cobran 4x1000 hasta ${formatCOP(LOW_AMOUNT_CAP)} al mes (65 UVT) en ${TAX_YEAR}. Ejemplos de cuánto pagas si te pasas del tope.`
+const examples = [1_000_000, 3_000_000, 5_000_000, 8_000_000]
+const faq = [
+  FAQ_LOW_AMOUNT,
+  {
+    q: '¿Cómo sé si mi Nequi o Daviplata es un depósito de bajo monto?',
+    a: 'Revísalo en la app o pregúntale a la entidad qué tipo de producto tienes. Si es una cuenta de ahorros, aplican las reglas de la cuenta exenta y no las de bajo monto.',
+  },
+]
+---
+
+<Guide
+  title={`4x1000 en Nequi y Daviplata ${TAX_YEAR}: tope de ${formatCOP(LOW_AMOUNT_CAP)}`}
+  h1="4x1000 en Nequi y Daviplata"
+  crumb="Nequi y Daviplata"
+  description={description}
+  lead={`Los depósitos de bajo monto, como Nequi o Daviplata, tienen su propia exención: no pagan 4x1000 mientras lo que sale en el mes no supere ${LOW_AMOUNT_UVT} UVT, que en ${TAX_YEAR} son ${formatCOP(LOW_AMOUNT_CAP)}.`}
+  faq={faq}
+  sources={['exemption', 'uvt']}
+>
+  <h2>El tope de {LOW_AMOUNT_UVT} UVT</h2>
+  <p>El parágrafo 4 del artículo 879 del Estatuto Tributario exime del GMF los depósitos de bajo monto hasta {LOW_AMOUNT_UVT} UVT mensuales. Con la UVT {TAX_YEAR} de {formatCOP(UVT)}, el tope queda en <strong>{formatCOP(LOW_AMOUNT_CAP)} al mes</strong>. Por encima de eso pagas el 0,4 % sobre el excedente.</p>
+
+  <h2>Ejemplos</h2>
+  <table>
+    <thead><tr><th scope="col">Sale en el mes</th><th scope="col">Parte gravada</th><th scope="col">4x1000</th></tr></thead>
+    <tbody>
+      {examples.map((m) => (
+        <tr><td>{formatCOP(m)}</td><td>{formatCOP(Math.max(0, m - LOW_AMOUNT_CAP))}</td><td>{formatCOP(gmf(m, LOW_AMOUNT_CAP))}</td></tr>
+      ))}
+    </tbody>
+  </table>
+  <p>En la <a href="/">calculadora</a> marca «Mi cuenta está marcada como exenta» y elige «Nequi / Daviplata» para calcular tu caso.</p>
+
+  <h2>Bajo monto frente a cuenta de ahorros exenta</h2>
+  <p>El tope de una cuenta de ahorros marcada como exenta es mucho más alto: {formatCOP(EXEMPT_CAP)} al mes (350 UVT). Si mueves más de {formatCOP(LOW_AMOUNT_CAP)} al mes por la billetera, vale la pena revisar qué producto tienes y cuál te conviene marcar. Lo explicamos en <a href="/cuenta-exenta-4x1000/">cómo marcar tu cuenta exenta</a>.</p>
+  <p class="note">Las condiciones de cada producto las define la entidad. Si tienes dudas sobre cómo se combinan los topes con otras cuentas tuyas, pregúntale directamente a Nequi, Daviplata o tu banco.</p>
+</Guide>

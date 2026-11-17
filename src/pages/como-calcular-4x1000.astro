@@ -1,0 +1,69 @@
+---
+import Guide from '../layouts/Guide.astro'
+import { FAQ_RATE } from '../data/faq.js'
+import { EXEMPT_CAP, TAX_YEAR } from '../data/tax.js'
+import { formatCOP } from '../lib/format.js'
+import { gmf, totalDebit, maxTransfer } from '../lib/gmf.js'
+import { howTo } from '../lib/schema.js'
+
+const h1 = 'Cómo calcular el 4x1000 paso a paso'
+const description = `La fórmula del 4x1000 (GMF): monto × 0,004. Ejemplos, cómo saber cuánto necesitas en la cuenta y cómo descontar el tope exento de ${formatCOP(EXEMPT_CAP)} en ${TAX_YEAR}.`
+const steps = [
+  'Toma el valor del retiro, transferencia o pago que sale de tu cuenta.',
+  'Si tu cuenta está marcada como exenta, réstale lo que te quede del tope exento del mes.',
+  'Multiplica lo que queda por 0,004 (o divídelo entre 250): ese es el 4x1000.',
+  'Suma el 4x1000 al valor del movimiento para saber cuánto necesitas tener en la cuenta.',
+]
+const examples = [100_000, 500_000, 1_000_000, 2_500_000]
+const big = 20_000_000
+const faq = [
+  FAQ_RATE,
+  {
+    q: '¿Cuál es la fórmula del 4x1000?',
+    a: '4x1000 = monto × 0,004. Es lo mismo que dividir el monto entre 250. Para saber cuánto necesitas en la cuenta: monto × 1,004.',
+  },
+  {
+    q: '¿Cuánto puedo transferir si tengo un saldo exacto?',
+    a: `Divide el saldo entre 1,004. Con ${formatCOP(1_004_000)} puedes transferir ${formatCOP(1_000_000)}, porque el banco descuenta además ${formatCOP(4000)} de GMF.`,
+  },
+]
+---
+
+<Guide
+  title={`Cómo calcular el 4x1000 (GMF) en ${TAX_YEAR}: fórmula y ejemplos`}
+  h1={h1}
+  crumb="Cómo calcular el 4x1000"
+  description={description}
+  lead="El 4x1000 se calcula multiplicando el valor del movimiento por 0,004. Es una cuenta de una línea, pero hay dos detalles que cambian el resultado: el tope exento si tu cuenta está marcada, y que el impuesto se cobra además del monto que mueves."
+  faq={faq}
+  sources={['rate', 'exemption', 'uvt']}
+  extraJsonLd={[howTo({ name: h1, description, steps })]}
+>
+  <h2>La fórmula</h2>
+  <p><strong>4x1000 = monto × 0,004</strong>. La tarifa es de 4 por mil, es decir, el 0,4 % (art. 872 del Estatuto Tributario). Si prefieres hacerlo de cabeza: divide el monto entre 250.</p>
+
+  <h2>Paso a paso</h2>
+  <ol>
+    {steps.map((s) => <li>{s}</li>)}
+  </ol>
+
+  <h2>Ejemplos rápidos</h2>
+  <table>
+    <thead><tr><th scope="col">Movimiento</th><th scope="col">4x1000</th><th scope="col">Debes tener en la cuenta</th></tr></thead>
+    <tbody>
+      {examples.map((m) => (
+        <tr><td>{formatCOP(m)}</td><td>{formatCOP(gmf(m))}</td><td>{formatCOP(totalDebit(m))}</td></tr>
+      ))}
+    </tbody>
+  </table>
+  <p>¿Necesitas más montos? Mira la <a href="/tabla-4x1000/">tabla del 4x1000</a>.</p>
+
+  <h2>Cuánto necesitas tener y cuánto puedes enviar</h2>
+  <p>El banco descuenta el 4x1000 aparte del valor que transfieres. Por eso, para mover {formatCOP(1_000_000)} necesitas {formatCOP(totalDebit(1_000_000))} en la cuenta (monto × 1,004).</p>
+  <p>Al revés: si tienes un saldo exacto y quieres enviarlo todo, divide el saldo entre 1,004. Con {formatCOP(1_004_000)} puedes enviar {formatCOP(maxTransfer(1_004_000))}.</p>
+
+  <h2>Con cuenta exenta</h2>
+  <p>Si tu cuenta está marcada como exenta, los primeros {formatCOP(EXEMPT_CAP)} que salgan en el mes no pagan (350 UVT en {TAX_YEAR}). Sólo pagas sobre el excedente.</p>
+  <p>Ejemplo: si en el mes sacas {formatCOP(big)}, la parte gravada es {formatCOP(big - EXEMPT_CAP)} y el 4x1000 es <strong>{formatCOP(gmf(big, EXEMPT_CAP))}</strong>, en lugar de {formatCOP(gmf(big))} sin exención.</p>
+  <p class="note">El tope es mensual y se va gastando con cada movimiento. Si ya usaste parte del tope este mes, resta sólo lo que te queda. Más detalle en <a href="/exenciones-4x1000/">exenciones del 4x1000</a>.</p>
+</Guide>

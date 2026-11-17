@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro'
+import { GUIDES, AMOUNTS, amountPath } from '../data/site.js'
+import { TAX_YEAR } from '../data/tax.js'
+import { breadcrumbList } from '../lib/schema.js'
+
+const title = `Guías del 4x1000 en Colombia (${TAX_YEAR})`
+const description = 'Guías sobre el 4x1000 (GMF): cómo calcularlo, exenciones, cuenta exenta, Nequi y Daviplata, deducción en renta y ejemplos por monto.'
+---
+
+<Base title={title} description={description} jsonLd={[breadcrumbList([{ name: 'Guías', path: '/guias/' }])]}>
+  <h1 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl dark:text-white">Guías del 4x1000</h1>
+  <p class="mt-3 max-w-3xl text-lg text-slate-700 dark:text-slate-300">Todo lo que necesitas para entender el Gravamen a los Movimientos Financieros en {TAX_YEAR}, con cifras y fuentes.</p>
+
+  <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {GUIDES.map((g) => (
+      <a href={g.path} class="card block transition-colors hover:border-blue-600 dark:hover:border-blue-400">
+        <h2 class="font-semibold text-slate-900 dark:text-white">{g.title}</h2>
+        <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">{g.summary}</p>
+      </a>
+    ))}
+  </div>
+
+  <h2 class="mb-4 mt-12 text-2xl font-bold text-slate-900 dark:text-white">El 4x1000 por monto</h2>
+  <ul class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+    {AMOUNTS.map((a) => (
+      <li><a href={amountPath(a.slug)} class="flex min-h-11 items-center text-blue-700 hover:underline dark:text-blue-400">4x1000 de {a.label}</a></li>
+    ))}
+  </ul>
+</Base>
