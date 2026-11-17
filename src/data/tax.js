@@ -1,4 +1,5 @@
-// Cifras tributarias del año vigente. Actualizar cada enero: UVT, SMLMV y fecha.
+// Cifras tributarias del año vigente. Actualizar cada enero: UVT, SMLMV, fecha y la imagen
+// public/og.png (se genera con una captura 1200x630 de scripts/og.html).
 
 export const TAX_YEAR = 2026
 export const UPDATED_LABEL = 'Actualizado: noviembre 2026'
@@ -31,7 +32,7 @@ export const SOURCES = {
     url: 'http://www.secretariasenado.gov.co/senado/basedoc/estatuto_tributario_pr035.html',
   },
   uvt: {
-    label: 'Resolución DIAN 000238 del 15 de diciembre de 2025 (UVT 2026)',
+    label: `Resolución DIAN 000238 del 15 de diciembre de 2025 (UVT ${TAX_YEAR})`,
     url: null,
   },
   deduction: {
@@ -39,7 +40,7 @@ export const SOURCES = {
     url: null,
   },
   smlmv: {
-    label: 'Decreto 1469 de 2025 y Decreto 0159 de 2026 (salario mínimo 2026)',
+    label: `Decreto 1469 de 2025 y Decreto 0159 de 2026 (salario mínimo ${TAX_YEAR})`,
     url: 'https://normativa.colpensiones.gov.co/colpensiones/compilacion/docs/decreto_0159_2026.htm',
   },
   reform: {

@@ -1,10 +1,11 @@
 import { defineConfig } from 'astro/config'
 import svelte from '@astrojs/svelte'
 import sitemap from '@astrojs/sitemap'
+import { UPDATED_ISO } from './src/data/tax.js'
 
 export default defineConfig({
   site: 'https://www.4x1000.co',
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [svelte(), sitemap()],
+  integrations: [svelte(), sitemap({ lastmod: new Date(UPDATED_ISO) })],
 })
